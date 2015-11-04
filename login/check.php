@@ -1,19 +1,19 @@
 <?php
 
 //if user is logged in already
-if(isset($_COOKIE['user'])){
+if(isset($_SESSION['user'])){
 	header("Location: ../index.php");
 }
 
 //if the user tries to open this script without form action
-if((!(isset($_POST['email'])))and(!(isset($_POST['pass'])))and((!(isset($_POST['customer'])))or(!(isset($_POST['vendor']))))){
+if((!(isset($_POST['email'])))and(!(isset($_POST['pass'])))and(!(isset($_POST['accountType'])))){
 	include "Login.php";
 	session_start();
 	$_SESSION['error'] = "Something went wrong. Please try again.";
 }
 
-include '../food-jackal/classes/database/database-connect.php';
-//include '../classes/database/database-connect.php';
+//include '../food-jackal/classes/database/database-connect.php';
+include '../classes/database/database-connect.php';
 $con = new Database();
 $con->connectToDatabase();
 
@@ -21,15 +21,16 @@ $email = $_POST['email'];
 $pass = $_POST['pass'];
 
 
-if(isset($_POST['customer'])){
-	$cust = $_POST['customer'];
+if($_POST['accountType']=="customer"){
+	$cust = $_POST['accountType'];
 $query = "SELECT * FROM Customer WHERE customerPassword='$pass' AND customerEmail='$email'";	
 }
-else if(isset($_POST['vendor'])){
-$vend = $_POST['vendor'];
+else if($_POST['accountType']=="vendor"){
+$vend = $_POST['accountType'];
 $query = "SELECT * FROM Vendor WHERE vendorPassword='$pass' AND vendorEmail='$email''";		
 }
 else{
+	echo "something went wrong";
 	header("Location: ../index.php");
 }
 
@@ -54,16 +55,21 @@ if($row_count == 1){
 
 	//make user cookie
 	if(isset($vend)){
-		$cookie_name = "user";
+		session_start();
+	$cookie_name = "user";
 	$cookie_value = $row['vendorName'];
 	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+	$email = $_SESSION['user'];
+	$cookie_value = $_SESSION['vendor'];
 	}
 	else if(isset($cust)){
+	session_start();
 	$cookie_name = "user";
 	$cookie_value = $row['fname']+" "+ $row['lname'];
 	setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+	$email = $_SESSION['user'];
+	$cookie_value = $_SESSION['customer'];
 	}
-
 
 	header('Location: ../index.php');
 }
