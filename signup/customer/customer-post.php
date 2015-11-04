@@ -88,6 +88,8 @@ if($_POST){
 		//Check if passwords match or a greater than 6 character
 		if($pass1 != $pass2 || empty($pass1)){
 			array_push($errors, "Passwords do not match.");
+		}else{
+			$passhash = hash('sha256', $pass1);
 		}
 		//Check password size >= 6 
 		if(strlen($pass1) < 6){
@@ -135,7 +137,7 @@ if($_POST){
    	
 	<?php
 	//Push data to the database 
-	$insert = "INSERT INTO Customer( customerFname, customerLname, customerEmail, customerAddress, customerDOB, customerAccountCreation, 		customerPassword )VALUES ('$fname', '$lname', '$email', '$address','$dob', NOW( ) , '$pass1')";
+	$insert = "INSERT INTO Customer( customerFname, customerLname, customerEmail, customerAddress, customerDOB, customerAccountCreation, customerPassword )VALUES ('$fname', '$lname', '$email', '$address','$dob', NOW( ) , '$passhash')";
 	$connection-> insertData($insert);
 	$connection->closeConnection();
 	?>
