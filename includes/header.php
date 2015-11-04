@@ -41,10 +41,10 @@
 				</form>
 				</li>
 				<li>
-					<a href="Signup">Signup</a>
+					<a href="http://cloud.graham-murray.com/FoodJackal/signup/customer/">Signup</a>
 				</li>
 				<li>
-					<a href="Login">Login</a>
+					<a href="http://cloud.graham-murray.com/FoodJackal/login/Login.php">Login</a>
 				</li>
       			</ul>
             </div>
