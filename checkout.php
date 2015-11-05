@@ -14,14 +14,14 @@ if(isset($_COOKIE['pay'])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> FoodJackal | Checkout </title>
+    <title> FoodJackal | Checkout</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/shop-item.css" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" rel="stylesheet">
 
     
             <script>
@@ -42,21 +42,13 @@ if(isset($_COOKIE['pay'])){
                 xmlhttp.send();
             }
             </script>
-
-
-
-
-
-
 </head>
-
-
 
 
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -66,7 +58,9 @@ if(isset($_COOKIE['pay'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><font face="magneto">FoodJackal</font></a>
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="..\images\logo.jpg" style="margin-top:-13px" width="95px" height="45px">
+                </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -223,7 +217,7 @@ if(isset($_COOKIE['pay'])){
 
                 <div class="container">
                     </br>
-                    <div style="width:380px;   padding: 10px; margin: 5px; border: 5px solid grey; margin-left:850px">
+                    <div style="width:380px; padding: 10px; margin: 5px; border: 5px solid grey; margin-left:850px">
                         <h4> Order Cost: </h4>
                         <h4> Additional Cost: </h4>
                         <h4> Time of Collection: </h4>
@@ -246,15 +240,22 @@ if(isset($_COOKIE['pay'])){
 
 
         <!-- Footer -->
+         <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <center><p>Copyright &copy; FoodJackal 2015</p></center>
+                    <center><p>Copyright &copy; FoodJackal</p></center>
                 </div>
             </div>
         </footer>
 
     </div>
+
+   
     
 
     <!-- jQuery -->
