@@ -1,5 +1,5 @@
   <?php
-  if(isset($_COOKIE['user']) || isset($_COOKIE['vendor'])){
+  if(isset($_SESSION['vendor']) || isset($_SESSION['customer'])){
   	header("Location: ../index.php");
   }
   ?>
