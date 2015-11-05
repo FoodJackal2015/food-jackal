@@ -14,7 +14,7 @@ if(isset($_COOKIE['pay'])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> FoodJackal | Payment Operator </title>
+    <title> FoodJackal | Checkout </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
