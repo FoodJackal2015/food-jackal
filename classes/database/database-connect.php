@@ -58,7 +58,11 @@ class Database{
 	public function updateDatabase($sql){
 		if($this->conn->query($sql) === FALSE){
 			die('Update Query Failed '.$this->conn->error);
-		}
+			return false;
+		}else{
+			return true;
+			}
+
 	}
 
 	/* Delete Data */
