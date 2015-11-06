@@ -18,6 +18,7 @@
     $dataset = $conn->selectData($sql);
     $conn->closeConnection();
     
+    $productArray = array();
     if($dataset->num_rows > 0)
             {
                 while($row = $dataset->fetch_assoc())
@@ -30,8 +31,11 @@
                     $vendorEmail = $row['vendorEmail'];
                 
 
-                    $data = array();
-    
+                    
+
+                    $productArray[] = $row;
+
+
 
                     //Code to get vendor logo if there's no logo it'll display a default image
                     if($row['vendorLogoImageName'] == null)
@@ -118,10 +122,19 @@
                         </thead>
                         <tbody>
                             <?php
-                                if (count($data) > 0) {
+                                if (count($productArray) > 0) {
                                     // output data of each row
-                                    
-                                        echo json_encode($data);
+                                    	for($i = 0; $i<count($productArray); $i++)
+                                    {
+                                    // output data of each row
+                                    echo '<tr>';
+                                    	echo '<td>';
+                                    		echo base64_decode($productArray['productTitle']);
+                                    	echo '</td>';
+
+                                    echo '</tr>';
+                                	}
+                                        echo json_encode($productArray);
                                     
                                 } else {
                                     echo "<p>There's no products in you listing</p>";
