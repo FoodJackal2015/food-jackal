@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['vendorId'])){
-	header("Location: ../../index.php");
+	header("Location: ../../login/index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ if(!isset($_SESSION['vendorId'])){
     <meta name="author" content="Graham Murray">
     <link type="text/css" rel="stylesheet" href="../../css/custom.css">
 
-    <title>FoodJackal | Login</title>
+    <title>FoodJackal | Control Panel</title>
 
     <?php include('../../includes/links.php');?>
 
@@ -27,6 +27,15 @@ if(!isset($_SESSION['vendorId'])){
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
           <![endif]-->
+    <style type="text/css">
+    	.classWithPad { margin:10px; padding:10px; }
+    	.glyphicon-big{font-size:10em;}
+    	.glyphicon{color:#333333;}
+    	.glyphicon:hover{color:#2780e3;}
+    	a{color:#333333;}
+    	a:hover{text-decoration: none;}
+    	span{margin-top:10px;}
+    </style>
   </head>
 
   <body>
@@ -37,21 +46,71 @@ if(!isset($_SESSION['vendorId'])){
         <!-- Page Content -->
         <div class="container top-margin-content">
           <div class="row">
-            <h1 class="text-center"><?php echo $_SESSION['vendorName']?>'s Control Panel</h1>
-            <div class="col-md-6" style="background-color:blue; height:100px;">
-              
+          	<div class="col-md-12 text-center" style="margin-bottom:20px;">
+            	<h1><?php echo $_SESSION['vendorName']?>'s Control Panel</h1>
             </div>
 
-            <div class="col-md-6" style="background-color:blue; height:100px;">
-              
+            <div class="col-md-3 text-center">
+        		<a href="">
+            		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-edit glyphicon-big"></span>
+              			<h3>Edit Account</h3>
+              		</div>
+          		</a>
             </div>
 
-            <div class="col-md-6" style="background-color:blue; height:100px;">
-              
+            <div class="col-md-3 text-center">
+        		<a href="list.php">
+              		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-eye-open glyphicon-big"></span>
+              			<h3>View Products</h3>
+              		</div>
+          		</a>
             </div>
 
-            <div class="col-md-6" style="background-color:blue; height:100px;">
-              
+            <div class="col-md-3 text-center">
+        		<a href="./add/index.php">
+              		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-plus-sign glyphicon-big"></span>
+              			<h3>Add Products</h3>
+              		</div>
+          		</a>
+            </div>
+
+            <div class="col-md-3 text-center">
+        		<a href="#">
+              		<div class="thumbnail">
+              			<span class=" 	glyphicon glyphicon-qrcode glyphicon-big"></span>
+              			<h3>Manage Orders</h3>
+              		</div>
+          		</a>
+            </div>
+
+            <div class="col-md-3 text-center">
+        		<a href="#">
+              		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-euro glyphicon-big"></span>
+              			<h3>Payments</h3>
+              		</div>
+          		</a>
+            </div>
+
+            <div class="col-md-3 text-center">
+        		<a href="./logo/add/">
+              		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-picture glyphicon-big"></span>
+              			<h3>Add Logo</h3>
+              		</div>
+          		</a>
+            </div>
+
+            <div class="col-md-3 text-center">
+        		<a href="#">
+              		<div class="thumbnail">
+              			<span class="glyphicon glyphicon-envelope glyphicon-big"></span>
+              			<h3>View Email</h3>
+              		</div>
+          		</a>
             </div>
           </div>
         </div>
