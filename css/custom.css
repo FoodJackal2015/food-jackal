@@ -37,8 +37,14 @@
 	background-color:#2780E3;
 	}
 .vendor-thumbnail{/* index.php vendor page vendor div height */
-	height:290px;
+	min-height:290px;
+	min-height:350px;
 	}
-.vendor-thumbnail img{/* index.php vendor page vendor div height */
-	height:150px;
+.btn-add-cart{/* list-products.php style for button adding items to cart */
+	border-radius:5px;
+	-moz-border-radius:5px;
+  	-webkit-border-radius:5px;
+	}
+.btn-add-cart:hover{/* list-products.php style for button adding items to cart */
+	background-color:#2780e3;
 	}

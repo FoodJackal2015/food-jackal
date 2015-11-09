@@ -57,9 +57,7 @@ if(!(isset($_SESSION['vendorId']))){
             {
 
             	
-            	
-            	
-	                $(document).on('submit', '#delete-form', function ()
+            	$(document).on('submit', '#delete-form', function ()
 	                {
 
 	                   var r = confirm("Are you sure you want to remove this product?");

@@ -13,14 +13,14 @@
             FROM Vendor
             INNER JOIN Product
             ON Vendor.vendorId=Product.vendorId
-            WHERE Vendor.vendorId='$vendorId' ";
+            WHERE Vendor.vendorId='$vendorId' AND Product.ProductStatus='1' ";
 
     $dataset = $conn->selectData($sql);
     $conn->closeConnection();
     
-    $productArray = array();
     if($dataset->num_rows > 0)
             {
+
                 while($row = $dataset->fetch_assoc())
                 {
                     //Vendor Details stored in varialbes
@@ -29,11 +29,7 @@
                     $vendorAddress = $row['vendorAddressLine1'].', '.$row['vendorAddressLine2'].', '.$row['vendorCity'];
                     $vendorTelephone = $row['vendorTelephone'];
                     $vendorEmail = $row['vendorEmail'];
-                
-
-                    
-
-                    $productArray[] = $row;
+             
 
 
 
@@ -81,7 +77,33 @@
         .glyphicon-text{font-size:0.8em; margin-right:10px;}
         .menu{bottom:0;}
         .description{width:500px;}
+        button{border-radius:5px;}
+        .order-result{min-height:150px;}
+        .cart-total-price{margin-top:60px;}
     </style>
+
+    <!-- Ajax form to add and update cart -->
+	<script type="text/javascript">
+	$(document).ready(function ()
+            {
+        		$(document).on('submit', '#add-item-cart', function ()
+                {
+                    var data = $(this).serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'cart.php',
+                        data: data,
+                        success: function (data)
+                        {
+                            $(".order-result").html(data);
+                        }//Close Success
+                    });
+                    return false;
+                });
+            	
+            });
+		
+        </script>
 </head>
 
 <body>
@@ -114,28 +136,46 @@
                     <table class="table table-striped table-hover table-responsive">
                         <thead>
                             <tr>
-                                <th class="col-md-3 align-center">Product Title</th>
+                                <th class="col-md-3 align-center">Title</th>
                                 <th class="col-md-5 col-lg-6 align-center">Description</th>
-                                <th class="col-md-1 col-lg-1 align-center">Price &euro;</th>
-                                <th>Add to Cart</th>
+                                <th class="col-md-1 col-lg-1 align-center">Price</th>
+                                <th class="text-center">Add to Cart</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                if (count($productArray) > 0) {
+                                if ($dataset->num_rows > 0) {
                                     // output data of each row
-                                    	for($i = 0; $i<count($productArray); $i++)
+                                    foreach ($dataset as $row)//Use foreach instead of fetch_assoc()
                                     {
-                                    // output data of each row
+                                    	// output data of each row
                                     echo '<tr>';
                                     	echo '<td>';
-                                    		echo base64_decode($productArray['productTitle']);
+                                    		echo base64_decode($row['productTitle']);
                                     	echo '</td>';
 
-                                    echo '</tr>';
-                                	}
-                                        echo json_encode($productArray);
+                                    	echo '<td>';
+                                    		echo base64_decode($row['productDesciption']);
+                                    	echo '</td>';
+
+                                    	echo '<td>';
+                                    		echo '&euro;'.$row['productPrice'];
+                                    	echo '</td>';
+
+                                    	echo '<td>';
+                                    		echo '<form id="add-item-cart" method="post">';
+                                    			//Send Array in hidden input
+                                    			echo '<input type="hidden" name="vendorId" value="'.$row['vendorId'].'">';
+                                                echo '<input type="hidden" name="productId" value="'.$row['productId'].'">';
+                                                echo '<input type="hidden" name="productTitle" value="'.base64_decode($row['productTitle']).'">';
+                                                echo '<input type="hidden" name="productPrice" value="'.$row['productPrice'].'">';
+                                    			echo "<center><button type='submit' class='btn-edit btn-sm'><span class='glyphicon glyphicon-plus'></span></button></center>";
+                                    		echo '</form>';
+                                    	echo '</td>';
                                     
+                                    echo '</tr>';
+                                    }
+   
                                 } else {
                                     echo "<p>There's no products in you listing</p>";
                                     }
@@ -146,15 +186,17 @@
             </div>
             
             <div class="col-md-3">
-                <div class="thumbnail">
-                    <h3 class="text-center">Your Order</h3>
+                <div class="thumbnail  text-center">
+                    <h3>Your Order</h3>
                     <hr>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <center><input type="submit" value="Proceed" class="btn btn-success"/></center>
+	                    <div class="order-result">
+	                    	<!-- AJAX Return Data Displayed Here Below is default values-->
+                            <p>No items selected</p>
+                            <hr>
+	                    </div>
+                        
+                    <hr>
+                    <center><input type="submit" value="Checkout" class="btn btn-success"/></center>
                 </div>
             </div>
         </div>

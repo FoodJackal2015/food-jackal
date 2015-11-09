@@ -91,7 +91,7 @@
                     echo '<a class="vendor-link" href="./cart/view-products.php?vid='.$row['vendorId'].'">';
                     echo    '<div class="col-xs-4  col-sm-3 col-md-3 col-lg-3">';
                     echo        '<div class="thumbnail vendor-thumbnail">';
-                    echo            '<img class="img-responsive" src="'.$image.'" alt="'.$row['vendorName'].' Logo">';
+                    echo            '<img class="img-responsive" style="height:150px;" src="'.$image.'" alt="'.$row['vendorName'].' Logo">';
                     echo            '<div class="caption-full">';
                     echo                '<h4 class="text-center"><a  href="./cart/view-products.php?vid='.$row['vendorId'].'">'.$row['vendorName'].'</a></h4>';
                     echo                '<p class="text-center">'.$shortDescription.'</p>';
