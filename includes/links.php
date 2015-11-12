@@ -8,9 +8,11 @@
  * @copyright Copyright (c) 2015
 */
 ?>
-<!-- CDN Bootstrap for slate theme-->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet">
+<!-- CDN Bootstrap for slate theme
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/slate/bootstrap.min.css" rel="stylesheet">-->
 
+
+<link href="https://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
 <!-- AngularJS -->
 <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> 
 
