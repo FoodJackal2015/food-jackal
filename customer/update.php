@@ -14,20 +14,20 @@ $con->connectToDatabase();
 		$email = $_POST['email'];
 		$pass = $_POST['pass'];
 
-		if(!empty($fname)){
-			$change = "UPDATE customer SET customerFname='$fname' where customerEmail ='".$_COOKIE['user']."'";
+		if(!("" == trim($_POST['fname']))){
+			$change = "UPDATE customer SET customerFname='$fname' where customerId ='".$_COOKIE['user']."'";
 			$con->selectData($change);
 		}
-		if(!empty($lname)){
-			$change = "UPDATE customer SET customerLname='$lname' where customerEmail ='".$_COOKIE['user']."'";
+		if(!("" == trim($_POST['lname']))){
+			$change = "UPDATE customer SET customerLname='$lname' where customerId ='".$_COOKIE['user']."'";
 	        $con->selectData($change);
 		}
-		if(!empty($email)){
-			$change = "UPDATE customer SET customerEmail='$email' where customerEmail ='".$_COOKIE['user']."'";
+		if(!("" == trim($_POST['email']))){
+			$change = "UPDATE customer SET customerEmail='$email' where customerId ='".$_COOKIE['user']."'";
 	        $con->selectData($change);
 		}
-		if(!empty($pass)){
-			$change = "UPDATE customer SET customerPassword='$pass' where customerEmail ='".$_COOKIE['user']."'";
+		if(!("" == trim($_POST['pass']))){
+			$change = "UPDATE customer SET customerPassword='$pass' where customerId ='".$_COOKIE['user']."'";
 	        $con->selectData($change);
 		}
 	}
