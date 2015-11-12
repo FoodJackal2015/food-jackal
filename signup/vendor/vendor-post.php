@@ -97,7 +97,10 @@ if($_POST){
 		//Check if passwords match or a greater than 6 character
 		if($pass1 != $pass2 || empty($pass1)){
 			array_push($errors, "Passwords do not match.");
-		}
+		}else{
+			$passHash = hash('sha256', $pass1);
+			}
+
 		//Check password size >= 6 
 		if(strlen($pass1) < 6){
 			array_push($errors, "Password must at least 6 character in length.");
@@ -161,7 +164,7 @@ if($_POST){
 		mkdir("../../images/Vendor/".$vendorFolderName,0777);//Vendor root folder
 		mkdir("../../images/Vendor/".$vendorFolderName."/products",0777);//folder to store product images
 		//Push data to the database 
-		$insert = "INSERT INTO Vendor(vendorName, vendorAddressLine1, vendorAddressLine2, vendorCity, vendorTelephone, vendorAccountCreation,vendorFolderName,vendorDescription,vendorEmail,vendorPassword )VALUES ('$cName', '$addressLine1', '$addressLine2', '$city','$phone', NOW( ),'$vendorFolderName','$description','$email' , '$pass1')";
+		$insert = "INSERT INTO Vendor(vendorName, vendorAddressLine1, vendorAddressLine2, vendorCity, vendorTelephone, vendorAccountCreation,vendorFolderName,vendorDescription,vendorEmail,vendorPassword )VALUES ('$cName', '$addressLine1', '$addressLine2', '$city','$phone', NOW( ),'$vendorFolderName','$description','$email' , '$passHash')";
 		$connection-> insertData($insert);
 		$connection->closeConnection();
 		}
