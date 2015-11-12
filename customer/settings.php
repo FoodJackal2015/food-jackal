@@ -1,16 +1,16 @@
 <?php
 $g = $_REQUEST['setting'];
 if($g == "My-Settings"){
-    $url = "mysettings";
+    $url = "settings/mysettings";
 }
 else if($g == "General"){
-    $url = "general";
+    $url = "settings/general";
 }
 else if($g == "Advanced"){
-    $url = "advanced";
+    $url = "settings/advanced";
 }
 else{
-    header("Location: ../");
+    $url="settings/mysettings";
 }
 ?>
 <!DOCTYPE html>
@@ -32,6 +32,7 @@ else{
     <!-- Custom CSS -->
     <link href="css/shop-item.css" rel="stylesheet">
    <link href="https://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,6 +57,18 @@ else{
         header("Location: ../");
     }
     ?>
+            <?php
+             if(isset($success)){
+             echo '<br><br><div class="alert alert-success alert-dismissible" id="poll" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  '.$success.' 
+</div>';}
+else if(isset($error)){
+             echo '<br><br><div class="alert alert-danger alert-dismissible" id="poll" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  '.$error.' 
+</div>';}
+?>
 
     
     
