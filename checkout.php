@@ -59,7 +59,7 @@ if(isset($_COOKIE['pay'])){
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    <img alt="Brand" src="..\images\logo.jpg" style="margin-top:-13px" width="95px" height="45px">
+                    <img alt="Brand" src="logo.jpg" style="margin-top:-13px" width="95px" height="45px">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -226,12 +226,7 @@ if(isset($_COOKIE['pay'])){
                     </div>
                 </br></br></br>
 
-                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin-left:900px" >
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="EBX8FW4H6Z34C">
-                        <input type="image" src="https://authoralexapostoldotcom.files.wordpress.com/2014/03/paypal-buy-now-button-transparent.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form>
+                       
                     </br>
                 </div>
 
