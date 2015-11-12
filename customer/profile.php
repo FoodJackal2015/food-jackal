@@ -1,16 +1,16 @@
 <?php
 $g = $_REQUEST['profile'];
 if($g == "My-Details"){
-    $url = "mydetails";
+    $url = "profile/mydetails";
 }
 else if($g == "My-Orders"){
-    $url = "myorders";
+    $url = "profile/myorders";
 }
 else if($g == "Favourites"){
-    $url = "favourites";
+    $url = "profile/favourites";
 }
 else{
- $url = "mydetails";
+ $url = "profile/mydetails";
 }
 ?>
 
