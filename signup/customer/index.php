@@ -23,27 +23,18 @@
 
 	<?php include('../../includes/links.php')?>
         
-
-
 	<!-- Ajax form submit -->
 	<script type="text/javascript">
             
 	
 	$(document).ready(function ()
             {
-
-
                 $(document).on('submit', '#reg-form', function ()
                 {
-
                     //var fn = $("#fname").val();
                     //var ln = $("#lname").val();
-
                     //var data = 'fname='+fn+'&lname='+ln;
-
                     var data = $(this).serialize();
-
-
                     $.ajax({
                         type: 'POST',
                         url: 'customer-post.php',
@@ -62,7 +53,6 @@
             });
 		
         </script>
-
         <!-- Reset Form after submission -->
         <script type="text/javascript">
 			function resetForm() {
@@ -90,11 +80,7 @@
 	
 	
     </head>
-
-
-
     <body>
-
         <!-- Navigation -->
         <?php include('../../includes/header.php');?>
 
@@ -260,9 +246,7 @@
 		    $scope.email = '';
 		    $scope.pw1 = '';
 		    $scope.pw2 = '';
-
 		});
-
 		
 		
 	</script>
