@@ -80,13 +80,15 @@
         button{border-radius:5px;}
         .order-result{min-height:150px;}
         .cart-total-price{margin-top:60px;}
+        .cart-quantity{width: 60px;}
+        .cart-empty-checkout form{display: inline;}
     </style>
 
     <!-- Ajax form to add and update cart -->
 	<script type="text/javascript">
 	$(document).ready(function ()
             {
-        		$(document).on('submit', '#add-item-cart', function ()
+        		$(document).on('submit', '#cart-action', function ()
                 {
                     var data = $(this).serialize();
                     $.ajax({
@@ -102,8 +104,9 @@
                 });
             	
             });
-		
-        </script>
+	
+    </script>
+
 </head>
 
 <body>
@@ -163,10 +166,11 @@
                                     	echo '</td>';
 
                                     	echo '<td>';
-                                    		echo '<form id="add-item-cart" method="post">';
+                                    		echo '<form id="cart-action" method="post">';
                                     			//Send Array in hidden input
                                     			echo '<input type="hidden" name="vendorId" value="'.$row['vendorId'].'">';
                                                 echo '<input type="hidden" name="productId" value="'.$row['productId'].'">';
+                                                echo '<input type="hidden" name="action" value="add">';
                                                 echo '<input type="hidden" name="productTitle" value="'.base64_decode($row['productTitle']).'">';
                                                 echo '<input type="hidden" name="productPrice" value="'.$row['productPrice'].'">';
                                     			echo "<center><button type='submit' class='btn-edit btn-sm'><span class='glyphicon glyphicon-plus'></span></button></center>";
@@ -191,12 +195,54 @@
                     <hr>
 	                    <div class="order-result">
 	                    	<!-- AJAX Return Data Displayed Here Below is default values-->
-                            <p>No items selected</p>
+                            <?php
+                            
+                                if(isset($_SESSION['cart']))
+                                {
+                                    $totalPrice = 0;
+                                    foreach ($_SESSION['cart'] as $item)
+                                    {
+                                        $totalPrice += $item['productQuantity']*$item['productPrice'];
+
+                                        echo '<table class="table table-striped table-hover table-responsive">';
+                                        echo    '<tr style="border-bottom:none;">';
+                                        echo        '<td colspan="3" class="col-sm-3 col-md-3 col-lg-3 align-left">'.$item['productTitle'].'</td>';
+                                        echo    '</tr>';
+                                        echo    '<tr>';
+                                        echo        '<td>x'.$item['productQuantity'].'</td>';
+                                        echo        '<td>&euro;'.$item['productPrice'].'</td>';
+                                        echo        '<td>';
+                                        echo            '<form id="cart-action">';
+                                        echo                '<input type="hidden" name="action" value="remove">';
+                                        echo                '<input type="hidden" name="productId" value="$item["productPrice"]">';
+                                        echo                '<button type="submit"><a><span class="glyphicon glyphicon-remove-circle"></span></a></button>';
+                                        echo            '</form>';
+                                        echo        '</td>';
+                                        echo    '</tr>';
+                                        echo '</table>';
+                                    }
+                                        echo '<div class="cart-total-price">';
+                                            echo '<p><strong>Total: &nbsp;&nbsp; &euro;'.$totalPrice.'</strong></p>';
+                                        echo '</div>';
+                                }else{
+                                    echo '<p>No Items in selected</p>';
+                                    }
+                            ?>
                             <hr>
 	                    </div>
                         
                     <hr>
-                    <center><input type="submit" value="Checkout" class="btn btn-success"/></center>
+                    <div class="cart-empty-checkout">
+                        <center>
+                            <form id="awaiting">
+                                <input type="submit" value="Checkout" class="btn btn-success"/>
+                            </form>
+                            <form id="cart-action">
+                                <input type="hidden" name="action" value="empty">
+                                <input type="submit" value="Emtpy" class="btn btn-success"/>
+                            </form>
+                        </center>
+                    </div>
                 </div>
             </div>
         </div>
