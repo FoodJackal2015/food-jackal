@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+//Check if a vendor session exists and if no redirect to login
+if(!(isset($_SESSION['vendorId']))){
+	header(header('Location: http://'.$_SERVER['HTTP_HOST'].'/FoodJackal/login'));
+	}elseif (!isset($_POST['productId']) || !isset($_POST['productTitle']) || !isset($_POST['productPrice']) || !isset($_POST['productDescription'])) {
+		header("Location: ../list.php");
+		}else{
+			$productId = $_POST['productId'];
+			$productTitle = base64_decode($_POST['productTitle']);
+			$productPrice = $_POST['productPrice'];
+			$productDescription = base64_decode($_POST['productDescription']);
+			}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +26,7 @@
         <meta name="description" content="">
         <meta name="author" content="Graham Murray" >
 
-        <title>Food Jackal - Add Products</title>
+        <title>Food Jackal - Edit Product</title>
 
 
         
@@ -33,7 +50,7 @@
             {
 
 
-                $(document).on('submit', '#add-form', function ()
+                $(document).on('submit', '#update-form', function ()
                 {
 
                     //var fn = $("#fname").val();
@@ -46,7 +63,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: 'product-post.php',
+                        url: 'update-post.php',
                         data: data,
                         success: function (data)
                         {         
@@ -63,12 +80,7 @@
 		
         </script>
 
-        <!-- Reset Form after submission -->
-        <script type="text/javascript">
-			function resetForm() {
-			    document.getElementById("add-form").reset();
-			}
-		</script>
+
 	
 	<style type="text/css">
 	table, th, td {
@@ -106,22 +118,23 @@
 
 
         <!-- Page Content -->
-        <div class="container" style="margin-top:100px">
+        <div class="container" style="margin-top:80px">
 
         <div class="row">
 
 
-         <p class="lead text-left">Add New Product to Listing</p>
+         <h1 class="text-center">Update Product</h1>
 
         <div class="col-md-12">
 	
 
-            <form ng-app="myApp" method="post" id="add-form" ng-controller="validateCtrl" name="myForm">
+            <form ng-app="myApp" method="post" id="update-form" ng-controller="validateCtrl" name="myForm">
             <br>
             <br>   
             <br>
             <br>
-                        
+            <input type='hidden' name='productId' value="<?php echo $productId;?>"/>
+
 			<label>Product Title:</label>
                 <input type="text" 
 				class="form-control"
@@ -156,23 +169,23 @@
 				id="description" 
 				class="form-control" 
 				rows ="10"
-				ng-model="description"  
-				name="description"
+				ng-model="productDescription"  
+				name="productDescription"
 				placeholder="Enter a small description of the item"
 				required>
 			</textarea>
-            <span style="color:red" ng-show="myForm.description.$dirty && myForm.description.$invalid">
-				<span ng-show="myForm.description.$error.required">A brief description is required.</span>
+            <span style="color:red" ng-show="myForm.productDescription.$dirty && myForm.productDescription.$invalid">
+				<span ng-show="myForm.productDescription.$error.required">A brief description is required.</span>
 			</span>
             
             <br>
 
-
-				<input type="submit" value="Add Product" class="btn btn-success" ng-disabled="myForm.productTitle.$dirty && myForm.productTitle.$invalid || myForm.productPrice.$dirty && myForm.productPrice.$invalid || myForm.description.$dirty && myForm.description.$invalid">              
+            	<input type="hidden" name="vendorId" value="<?php $_SESSION['vendorId'];?>">
+				<input type="submit" value="Update" class="btn btn-success" ng-disabled="myForm.productTitle.$dirty && myForm.productTitle.$invalid || myForm.productPrice.$dirty && myForm.productPrice.$invalid || myForm.productDescription.$dirty && myForm.productDescription.$invalid">              
             </form>		   
 				
 				<!-- DIV to display data after ajax function -->
-		    	<div  class="result">
+		    	<div  class="result text-center">
 		    		<!-- Form submission results displayed here-->
 		    	</div>
                 </div>
@@ -198,22 +211,15 @@
         </div>
         <!-- /.container -->
 
-
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
 	
-	
-
-
 	
 	
 	<script>
 		var app = angular.module('myApp', []);
 		app.controller('validateCtrl', function($scope) {
-		    $scope.productTitle = '';
-		    $scope.productPrice = '';
-		    $scope.description = '';
+		    $scope.productTitle = '<?php echo $productTitle;?>';
+		    $scope.productPrice = '<?php echo $productPrice;?>';
+		    $scope.productDescription = '<?php echo $productDescription;?>';
 		});
 
 		

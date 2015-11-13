@@ -11,9 +11,40 @@
     margin: 0 auto;
 }
 
-.error{
+.error{/* AJAX Return */
       color:red;
       }
-.success{
+.success{/* AJAX Return */
 	color:green;
+	}
+
+.btn-delete{/* Delete icon on account/vendor/list.php */
+	background-color:none;
+	border:none;
+	}
+.btn-delete:hover{
+	background-color:red;
+	}
+
+.btn-edit{/* Edit icon on account/vendor/list.php */
+	background-color:none;
+	border:none;
+	}
+.btn-edit:hover{
+	background-color:lightblue;
+	}
+.list-group a:hover{/* This is for categories on vendor page */
+	background-color:#2780E3;
+	}
+.vendor-thumbnail{/* index.php vendor page vendor div height */
+	min-height:290px;
+	min-height:350px;
+	}
+.btn-add-cart{/* list-products.php style for button adding items to cart */
+	border-radius:5px;
+	-moz-border-radius:5px;
+  	-webkit-border-radius:5px;
+	}
+.btn-add-cart:hover{/* list-products.php style for button adding items to cart */
+	background-color:#2780e3;
 	}

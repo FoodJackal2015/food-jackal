@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
+=======
+  <?php
+  if(isset($_SESSION['vendor']) || isset($_SESSION['customer'])){
+  	header("Location: ../index.php");
+  }
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+>>>>>>> Graham
 
 <head>
 

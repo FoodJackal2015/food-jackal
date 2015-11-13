@@ -1,11 +1,15 @@
+Jelico is gay
 <?php
 
 include ('../classes/database/database-connect.php');
 
 //if user is logged in already
-if(isset($_COOKIE['user'])){
-	header("Location: ../index.php");
+session_start();
+if(isset($_SESSION['vendorId']) || isset($_SESSION['customerId'])){
+	echo "<center><p class= 'error'>Please logout before proceeding</p></center>";
+	die();
 }
+
 //if the user tries to open this script without form action
 if(!(isset($_POST['email'])) and !(isset($_POST['password']))) {
 	header('Location: http://'.$_SERVER['HTTP_HOST'].'/FoodJackal');
@@ -35,8 +39,7 @@ if($accountType === 'customer'){
 		
 		//Set Session Cookie with customer details
 		while($row = $dataset->fetch_assoc()) {
-			session_set_cookie_params(1300);//Session Lasts for 15mins
-         	session_start();
+         	
          	$_SESSION["customerId"] = $row['customerId'];
          	$_SESSION["customerFname"]= $row['customerFname'];
          	$_SESSION["customerLname"]= $row['customerLname'];
@@ -47,7 +50,7 @@ if($accountType === 'customer'){
 
 		//Redirect to index page
 		echo '<center><p class= "success">Login Successful</p></center>';
-		echo '<script type="type=text/javascript">indexRedrect()</script> ';
+		echo '<script type="type=text/javascript">indexRedirect()</script> ';
 
 	}else{
 		//Invalid User
@@ -64,7 +67,6 @@ if($accountType === 'customer'){
 		
 		//Set Session Cookie with customer details
 		while($row = $dataset->fetch_assoc()) {
-         	session_start();
          	$_SESSION["vendorId"] = $row['vendorId'];
          	$_SESSION["vendorName"] = $row['vendorName'];
          	$_SESSION["vendorEmail"] = $row['vendorEmail'];
@@ -75,7 +77,7 @@ if($accountType === 'customer'){
 
 		//Redirect to index page
 		echo '<center><p class= "success">Login Successful</p></center>';
-		echo '<script type="type=text/javascript">indexRedrect()</script> ';
+		echo '<script type="type=text/javascript">indexRedirect()</script> ';
 
 	}else{
 		//Invalid User
@@ -85,5 +87,5 @@ if($accountType === 'customer'){
 
 
 }else{//Account Type set incorrectly
-	header('Location: http://'.$_SERVER['HTTP_HOST'].'/FoodJackal');
-}
+	'<center><p class= "error">Server Error, Please try</p></center>';
+	}

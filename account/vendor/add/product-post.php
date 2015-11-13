@@ -12,6 +12,14 @@ include('../../../classes/security/validation.php');
 include('../../../classes/database/database-connect.php');
 include('../../../classes/maths/math.php');
 
+session_start();
+
+//Check if a vendor session exists and if no redirect to login
+if(!(isset($_SESSION['vendorId']))){
+	header(header('Location: http://'.$_SERVER['HTTP_HOST'].'/FoodJackal/login'));
+	}
+
+
 $connection = new Database;
 $validate = new Validation;
 $math = new Maths;
@@ -20,7 +28,7 @@ if($_POST){
 	$title = base64_encode($_POST['productTitle']);
 	$price = $math->truncate_number($_POST['productPrice']);
 	$description = base64_encode($_POST['description']);
-	$vendorId = 1;//Temp set to 1 until login is fully working
+	$vendorId = $_SESSION['vendorId'];
 
 	$errors = array();//Array to hold error messages
 	
