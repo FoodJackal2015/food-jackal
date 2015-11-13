@@ -66,10 +66,10 @@
         </form>
         </li>
                     <li>
-                    <a href="Signup/Signup.php">Signup</a>
+                    <a href="../Signup/Signup.php">Signup</a>
                 </li>
                 <li>
-                    <a href="Login/Login.php">Login</a>
+                    <a href="../Login/Login.php">Login</a>
                 </li>
       </ul>
             </div>
