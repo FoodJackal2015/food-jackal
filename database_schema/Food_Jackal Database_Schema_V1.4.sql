@@ -56,22 +56,42 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Food_Jackal`.`Category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Food_Jackal`.`Category` ;
+
+CREATE TABLE IF NOT EXISTS `Food_Jackal`.`Category` (
+  `categoryId` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `categoryName` VARCHAR(50) NOT NULL COMMENT '',
+  PRIMARY KEY (`categoryId`)  COMMENT '')
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Food_Jackal`.`Product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Food_Jackal`.`Product` ;
 
 CREATE TABLE IF NOT EXISTS `Food_Jackal`.`Product` (
   `productId` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `productTitle` VARCHAR(45) NOT NULL COMMENT '',
   `productPrice` DOUBLE NOT NULL COMMENT '',
+  `ProductStatus` BIT(1) NOT NULL DEFAULT 1 COMMENT '',
   `productDesciption` LONGTEXT NOT NULL COMMENT '',
-  `productImage` VARCHAR(45) NOT NULL COMMENT '',
   `productAddedDate` DATETIME NOT NULL COMMENT '',
   `vendorId` INT(11) NOT NULL COMMENT '',
+  `categoryId` INT NOT NULL COMMENT '',
   PRIMARY KEY (`productId`)  COMMENT '',
   INDEX `fk_Product_VendorID_idx` (`vendorId` ASC)  COMMENT '',
+  INDEX `fk_Product_CategoryID_idx` (`categoryId` ASC)  COMMENT '',
   CONSTRAINT `fk_Product_VendorID`
     FOREIGN KEY (`vendorId`)
     REFERENCES `Food_Jackal`.`Vendor` (`vendorId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Product_CategoryID`
+    FOREIGN KEY (`categoryId`)
+    REFERENCES `Food_Jackal`.`Category` (`categoryId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
