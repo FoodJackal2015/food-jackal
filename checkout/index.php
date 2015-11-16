@@ -1,6 +1,6 @@
 <?php
-if(isset($_COOKIE['cart'])){
-	header("Location: ../index.php");
+if(isset($_COOKIE['pay'])){
+    header("Location: ../index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -13,16 +13,20 @@ if(isset($_COOKIE['cart'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link type="text/css" rel="stylesheet" href="../css/custom.css">
 
-    <title> FoodJackal | Payment Operator </title>
+    <title> FoodJackal | Checkout</title>
 
-    
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/shop-item.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" rel="stylesheet">
 
     
             <script>
                 function check(){
-	               if (window.XMLHttpRequest) {
+                   if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp=new XMLHttpRequest();
                 } else {  // code for IE6, IE5
@@ -38,21 +42,13 @@ if(isset($_COOKIE['cart'])){
                 xmlhttp.send();
             }
             </script>
-
-
-
-
-
-
 </head>
-
-
 
 
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -62,7 +58,9 @@ if(isset($_COOKIE['cart'])){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><font face="magneto">FoodJackal</font></a>
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="logo.jpg" style="margin-top:-13px" width="95px" height="45px">
+                </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -77,23 +75,23 @@ if(isset($_COOKIE['cart'])){
                         <a href="Contact">Contact</a>
                     </li>
                 </ul>
-				<ul class="nav navbar-nav navbar-right">
-				<li>
-				 <form class="navbar-form" action="search.php?go" method="post" role="search">
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm">
-			<div class="input-group-btn">
-				<button class="btn btn-default" name ="submit" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-			</div>
-		</div>
-		</form>
-		</li>
-					<li>
-					<a href="Signup">Signup</a>
-				</li>
-				<li>
-					<a href="Login">Login</a>
-				</li>
+                <ul class="nav navbar-nav navbar-right">
+                <li>
+                 <form class="navbar-form" action="search.php?go" method="post" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm">
+            <div class="input-group-btn">
+                <button class="btn btn-default" name ="submit" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+        </li>
+                    <li>
+                    <a href="Signup">Signup</a>
+                </li>
+                <li>
+                    <a href="Login">Login</a>
+                </li>
       </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -104,7 +102,7 @@ if(isset($_COOKIE['cart'])){
 
 
     <!-- Page Content -->
-    <div class="container">
+    
     <?php
     if(isset($_SESSION['error'])){
         echo '<div class="alert alert-danger alert-dismissible" id="poll" role="alert">
@@ -113,116 +111,114 @@ if(isset($_COOKIE['cart'])){
     </div>';
     }
     ?>;
-
-<div class="container top-margin-content">
+</br></br></br>
+<div class="container">
 
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Shop Name</p>
+                
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+                    <a href="#" class="list-group-item active">Edit account details </a>
+                    <a href="#" class="list-group-item">Review your order</a>
+                    <a href="#" class="list-group-item"> Cancel Order</a>
                 </div>
             </div>
-
-            <div class="col-md-3">	
-                <center><h1>Checkout</h1></center>
         
+
+
+      
+        
+        <div class="col-md-5">  
+            
+        <center><h1> Checkout </h1>
         <center><a href="#">Make Changes to your order</a></center>
-    </div>
-    
-    <div class="container">
-        <h4><center> Review your Order </center></h4>
-        <table> 
-
-        </br> 
-
-
-
-            <div id="pricing">
-               
-
-                <p id="sub-total">
-                    <strong>Total</strong>: <span id="stotal"></span>
-                </p>
-            </div>
+            
+       
+        </br></br></br>
 
             <form action="order.html" method="post" id="checkout-order-form">
                 <!-- Billing Form -->
                 <fieldset id="fieldset-billing">
-                    <legend>Billing</legend>
+                    <legend>Billing Details</legend>
                     
 
-                    <div>
-                        <label for="lname"> First Name</label>
-                        <input type="text" name="fname" id="fname" data-type="string" data-message="This field cannot be empty" />
+                     <div>
+                        <label for="fname" style="float:left"> Student/Staff ID </label>
+                        
+                        <input type="text" name="snum" id="snum" data-type="string" data-message="This field cannot be empty" style="margin-left:160px"/>
+                        
                     </div>
-
+                        </br>
                     <div>
-                        <label for="fname"> Last Name</label>
-                        <input type="text" name="lname" id="lname" data-type="string" data-message="This field cannot be empty" />
+                        <label for="fname" style="float:left"> First Name</label>
+                        
+                        <input type="text" name="fname" id="fname" data-type="string" data-message="This field cannot be empty" style="margin-left:200px"/>
+                        
                     </div>
-
+                        </br>
                     <div>
-                        <label for="email">Email Address</label>
-                        <input type="text" name="email" id="email" data-type="expression" data-message="This is Not a valid email address" />
+                        <label for="lname" style="float:left"> Last Name</label>
+                        <input type="text" name="lname" id="lname" data-type="string" data-message="This field cannot be empty" style="margin-left:200px"/>
+                    
                     </div>
-
+                        </br>
                     <div>
-                        <label for="city">City</label>
-                        <input type="text" name="city" id="city" data-type="string" data-message="This field cannot be empty" />
+                        <label for="email" style="float:left">Email Address</label>
+
+                        <input type="text" name="email" id="email" data-type="expression" data-message="This is Not a valid email address" style="margin-left:175px"/>
                     </div>
-
+                        </br>
                     <div>
-                        <label for="address1">Address Line 1 </label>
-                        <input type="text" name="address" id="address" data-type="string" data-message="This field cannot be empty" />
+                        <label for="city" style="float:left">City</label>
+                        <input type="text" name="city" id="city" data-type="string" data-message="This field cannot be empty" style="margin-left:250px" />
                     </div>
-
+                        </br>
                     <div>
-                        <label for="address2">Address Line 2 </label>
-                        <input type="text" name="address" id="address" data-type="string" data-message="This field may not be empty" />
+                        <label for="address1" style="float:left">Address Line 1 </label>
+                        <input type="text" name="address" id="address" data-type="string" data-message="This field cannot be empty"style="margin-left:175px" />
                     </div>
-
+                        </br>
                     <div>
-                        <label for="address3">Address Line 3 </label>
-                        <input type="text" name="address" id="address" data-type="string" data-message="This field may not be empty" />
+                        <label for="address2" style="float:left">Address Line 2 </label>
+                        <input type="text" name="address" id="address" data-type="string" data-message="This field may not be empty" style="margin-left:175px" />
                     </div>
-
+                        </br>
                     <div>
-                        <label for="zip">ZIP Code</label>
-                        <input type="text" name="zip" id="zip" data-type="string" data-message="This field may not be empty" />
+                        <label for="address3" style="float:left">Address Line 3 </label>
+                        <input type="text" name="address" id="address" data-type="string" data-message="This field may not be empty"style="margin-left:175px"  />
                     </div>
-
+                        </br>
+                    
                     <div>
-                        <label for="country">Country</label>
-                            <select name="country" id="country" data-type="string" data-message="This field cannot be empty">
+                        <label for="country" style="float:left">County</label>
+                            <select name="country" id="country" data-type="string" data-message="This field may not be empty" style="margin-left:130px">
                                 <option value="">Select</option>
-                                <option value="IE">Ireland</option>
-                                <option value="UK">UK</option>
-                                <option value="US">USA</option>
-                                <option value="MEX">Mexico</option>
-                                <option value="ESP">Spain</option>
-                                <option value="FRA">France</option>
-                                <option value="IT">Italy</option>
-                                <option value="AUS">Australia</option>
-                                <option value="FIJ">Fiji </option>
+                                <option value="DUB">Dublin</option>
+                                <option value="LIM">Limerick</option>
+                                <option value="GAL">Galway</option>
+                                <option value="CO">Cork</option>
+                                <option value="WEX">Wexford</option>
+                                <option value="LAO">Laois</option>
+                                <option value="OFF">Offaly</option>
+                                <option value="KK">Kilkenny</option>
+                                <option value="KD">Kildare </option>
+                                <option value="M">Meath </option>
+
                             </select>
                     </div>  
                 </fieldset>
-            </form>
+            </form> 
 
-                <!-- End of Table --> 
+</div>
 
 
-                <!--Same as shipping address box --> 
-                <div id="shipping-same">Same as shipping address <input type="checkbox" id="same-as-shipping" value=""/> </div>
-                        <p><input type="submit" id="submit-order" value="Submit" class="btn" /></p>
-                </div> 
-    
-    <div class="col-md-3">
-                <div class="thumbnail  text-center">
+                <!-- Paypal Container for checkout -->
+
+                <div class="container">
+                    </br>
+                    <div style="width:380px; padding: 10px; margin: 5px; border: 5px solid grey; margin-left:850px">
+                        <div class="thumbnail  text-center">
                     <h3>Your Order</h3>
                     <hr>
                         <div class="order-result">
@@ -261,7 +257,7 @@ if(isset($_COOKIE['cart'])){
                                     }
                             ?>
                             <hr>
-                        </div>
+                        
                         <hr>
                          <div class="note-to-restaurant">
                             <div class="tr">
@@ -281,29 +277,41 @@ if(isset($_COOKIE['cart'])){
                             </form>
                         </center>
                     </div>
-                </div>
-            </div>
-        </div>
-<!-- Paypal Container for checkout -->
-
-                
-    </div>
-
-                <!-- Paypal Container for checkout -->
-              
-                <div class="container">
-                    </br>
-                        <center><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="float:left">
-                        <input type="hidden" name="cmd" value="_xclick">
+                    <hr>
+                    <div class="container">
+                        
+                       <center>
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="float:left; margin-left:70px">
+                        <input type="hidden" name="cmd" value="_xclick  ">
                         <input type="hidden" name="business" value="foodjackals@gmail.com">
                         <input type="hidden" name="item_name" value="FoodJackal Order">
                         <input type="hidden" name="item_number" value="1">
                         <input type="hidden" name="amount" value="100.00">
                         <input type="hidden" name="currency_code" value="EUR">
                         <input type="hidden" name="tax" value="0">
-                        <input type="image" src="https://authoralexapostoldotcom.files.wordpress.com/2014/03/paypal-buy-now-button-transparent.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                         <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                        </form></center>
+                        </form>
+                        </center>
+
+
+
+
+
+                    </div>
+
+
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                
+
+                       
                     </br>
                 </div>
 
@@ -311,17 +319,23 @@ if(isset($_COOKIE['cart'])){
 
 
 
+        <!-- Footer -->
+         <div class="container">
+
+        <hr>
 
         <!-- Footer -->
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <center><p>Copyright &copy; FoodJackal 2015</p></center>
+                    <center><p>Copyright &copy; FoodJackal</p></center>
                 </div>
             </div>
         </footer>
 
     </div>
+
+   
     
 
     <!-- jQuery -->
