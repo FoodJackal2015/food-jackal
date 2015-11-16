@@ -1,6 +1,6 @@
 <?php
 if(isset($_COOKIE['pay'])){
-	header("Location: ../index.php");
+    header("Location: ../index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -21,12 +21,12 @@ if(isset($_COOKIE['pay'])){
 
     <!-- Custom CSS -->
     <link href="css/shop-item.css" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" rel="stylesheet">
 
     
             <script>
                 function check(){
-	               if (window.XMLHttpRequest) {
+                   if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
                     xmlhttp=new XMLHttpRequest();
                 } else {  // code for IE6, IE5
@@ -75,23 +75,23 @@ if(isset($_COOKIE['pay'])){
                         <a href="Contact">Contact</a>
                     </li>
                 </ul>
-				<ul class="nav navbar-nav navbar-right">
-				<li>
-				 <form class="navbar-form" action="search.php?go" method="post" role="search">
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm">
-			<div class="input-group-btn">
-				<button class="btn btn-default" name ="submit" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-			</div>
-		</div>
-		</form>
-		</li>
-					<li>
-					<a href="Signup">Signup</a>
-				</li>
-				<li>
-					<a href="Login">Login</a>
-				</li>
+                <ul class="nav navbar-nav navbar-right">
+                <li>
+                 <form class="navbar-form" action="search.php?go" method="post" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srchterm" id="srchterm">
+            <div class="input-group-btn">
+                <button class="btn btn-default" name ="submit" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+        </li>
+                    <li>
+                    <a href="Signup">Signup</a>
+                </li>
+                <li>
+                    <a href="Login">Login</a>
+                </li>
       </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -129,7 +129,7 @@ if(isset($_COOKIE['pay'])){
 
       
         
-        <div class="col-md-5">	
+        <div class="col-md-5">  
             
         <center><h1> Checkout </h1>
         <center><a href="#">Make Changes to your order</a></center>
@@ -218,18 +218,89 @@ if(isset($_COOKIE['pay'])){
                 <div class="container">
                     </br>
                     <div style="width:380px; padding: 10px; margin: 5px; border: 5px solid grey; margin-left:850px">
-                        <h4> Order Cost: </h4>
-                        <h4> Additional Cost: </h4>
-                        <h4> Time of Collection: </h4>
+                        <div class="thumbnail  text-center">
+                    <h3>Your Order</h3>
+                    <hr>
+                        <div class="order-result">
+                            <!-- AJAX Return Data Displayed Here Below is default values-->
+                            <?php
+                            
+                                if(isset($_SESSION['cart']))
+                                {
+                                    $totalPrice = 0;
+                                    foreach ($_SESSION['cart'] as $item)
+                                    {
+                                        $totalPrice += $item['productQuantity']*$item['productPrice'];
+                                        echo '<table class="table table-striped table-hover table-responsive">';
+                                        echo    '<tr style="border-bottom:none;">';
+                                        echo        '<td colspan="3" class="col-sm-3 col-md-3 col-lg-3 align-left">'.$item['productTitle'].'</td>';
+                                        echo    '</tr>';
+                                        echo    '<tr>';
+                                        echo        '<td>x'.$item['productQuantity'].'</td>';
+                                        echo        '<td>&euro;'.$item['productPrice'].'</td>';
+                                        echo        '<td>';
+                                        echo            '<form id="cart-action">';
+                                        echo                '<input type="hidden" name="action" value="remove">';
+                                        echo                '<input type="hidden" name="productId" value="$item["productPrice"]">';
+                                        echo                '<button type="submit"><a><span class="glyphicon glyphicon-remove-circle"></span></a></button>';
+                                        echo            '</form>';
+                                        echo        '</td>';
+                                        echo    '</tr>';
+                                        echo '</table>';
+                                    }
+                                        echo '<div class="cart-total-price">';
+                                            echo '<p><strong>Total: &nbsp;&nbsp; &euro;'.$totalPrice.'</strong></p>';
+                                        echo '</div>';
+                                }else{
+                                    echo '<p>No Items in selected</p>';
+                                    }
+                            ?>
+                            <hr>
+                        
                         <hr>
-                        <h4> Price on collection: </h4>
-                        <hr> 
-                        <center><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="ZCWMNXXQY2KYW">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form></center>
+                         <div class="note-to-restaurant">
+                            <div class="tr">
+                                <label for="NoteToRestaurant">Leave a note for the restaurant</label>
+                                <textarea maxlength="200" name="NoteToRestaurant" placeholder="Any additional information about your order (e.g. No Onions, Ketchup on 1 roll please.)"></textarea>
+                            </div>
+    </div>
+                    <hr>
+                    <div class="cart-empty-checkout">
+                        <center>
+                            <form id="comment">
+                                <input type="submit" value="Add Note" class="btn btn-success"/>
+                            </form>
+                            <form id="cart-action">
+                                <input type="hidden" name="action" value="empty">
+                                <input type="submit" value="Empty" class="btn btn-success"/>
+                            </form>
+                        </center>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        
+                       <center>
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="float:left; margin-left:70px">
+                        <input type="hidden" name="cmd" value="_xclick  ">
+                        <input type="hidden" name="business" value="foodjackals@gmail.com">
+                        <input type="hidden" name="item_name" value="FoodJackal Order">
+                        <input type="hidden" name="item_number" value="1">
+                        <input type="hidden" name="amount" value="100.00">
+                        <input type="hidden" name="currency_code" value="EUR">
+                        <input type="hidden" name="tax" value="0">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>
+                        </center>
+
+
+
+
+
+                    </div>
+
+
+                
                         
                         
                         
