@@ -4,7 +4,7 @@
  * @package   product/admin/delete
  * @file      delete.php
  * @data      04/11/15
- * @author    Graham Murray <graham@graham-murray.com>
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
  * @copyright Copyright (c) 2015
 */
 include('../../classes/database/database-connect.php');
@@ -29,6 +29,4 @@ if(!(isset($_SESSION['vendorId']))){
 
 		echo '<script>location.reload()</script>';
 	}
-
-
 ?>

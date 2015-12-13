@@ -1,12 +1,11 @@
 <?php
 /*
- * @category  Push data to database
- * @package   signup
- * @file      customer-post.php
- * @data      26/10/15
- * @author    Graham Murray <graham@graham-murray.com>
+ * @category  Customer Registration
+ * @date      02/10/15
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
  * @copyright Copyright (c) 2015
 */
+
 //Includes
 include('../../classes/security/validation.php');
 include('../../classes/database/database-connect.php');
@@ -25,18 +24,11 @@ if($_POST){
 
 
 	$errors = array();//Array to hold error messages
-	
-
-
-
 ?>	
-	
 	<?php 
-	/* Server Side Validation performed here */
+		/* Server Side Validation performed here */
 		
 	
-		
-
 		/* Check if email already exists in database*/
 		$emailExist= false;		
 		
@@ -57,18 +49,11 @@ if($_POST){
 				}
 			}	    	 	
 		}
-	
-		
-		
 		
 		if($emailExist){
 			array_push($errors, "User ".$email." already exists.");
 		}
-		
-		
-		
-		
-		
+
 		
 		//Check if dob is valid format
 		if(!$validate->validMySQLDate($dob) || empty($dob)){	
@@ -158,12 +143,6 @@ if($_POST){
 
 
 	?>
-
-
-
-	
-	
-
 <?php	
 }
 ?>

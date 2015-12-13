@@ -1,4 +1,12 @@
 <?php
+/*
+ * @category  Cart Functionality
+ * @package   cart
+ * @file      cart.php
+ * @data      15/11/15
+ * @author    Graham Murray <x13504987@student@ncirl.ie>
+ * @copyright Copyright (c) 2015
+*/
 session_start();
 
 /* Initalize a new cart*/
@@ -30,11 +38,23 @@ function displayCart($cart){//Cart is the SESSION for cart
 			/* Table to out data */
 			echo '<table class="table table-striped table-hover table-responsive">';
 			echo	'<tr style="border-bottom:none;">';
-			echo		'<td colspan="3" class="col-sm-3 col-md-3 col-lg-3 align-left">'.$item['productTitle'].'</td>';
+			echo		'<td colspan="4" class="col-sm-3 col-md-3 col-lg-3 align-left">'.$item['productTitle'].'</td>';
 			echo	'</tr>';
 			echo	'<tr>';
 			echo		'<td>x'.$item['productQuantity'].'</td>';
 			echo		'<td>&euro;'.$item['productPrice'].'</td>';
+			
+			echo 		'<td>';
+			echo			'<form id="cart-action" method="post">';
+			echo        		'<input type="hidden" name="vendorId" value="'.$item['vendorId'].'">';
+			echo				'<input type="hidden" name="productId" value="'.$item['productId'].'">';
+			echo            	'<input type="hidden" name="action" value="add">';
+			echo            	'<input type="hidden" name="productTitle" value="'.base64_decode($item['productTitle']).'">';
+			echo            	'<input type="hidden" name="productPrice" value="'.$item['productPrice'].'">';
+			echo        		'<button type="submit"><a><span class="glyphicon glyphicon-plus-sign"></span></a></button>';
+			echo  			'</form>';
+			echo 		'</td>';
+			
 			echo		'<td>';
 			echo 			'<form id="cart-action" method="POST">';
 			echo 				'<input type="hidden" name="action" value="remove">';
@@ -48,6 +68,7 @@ function displayCart($cart){//Cart is the SESSION for cart
 			echo '<div class="cart-total-price">';
 				echo '<p><strong>Total: &nbsp;&nbsp; &euro;'.$totalPrice.'</strong></p>';
 			echo '</div>';
+			echo '<script type="text/javascript">location.reload()</script>';//Temporary Page Reload for checkout order options to change
 		}else{//Print not items selected
 			echo '<p>No Items Selected</p>';
 			}
@@ -67,6 +88,16 @@ if(isset($_POST) && isset($_POST['action']) && !empty($_POST['action']) )
 		/* Associative array of a product while will be store in the SESSION['cart'] */
 		$product = array();
 		$exists = checkCartForItem($productId, $_SESSION['cart']);
+
+		//Stop customers ordering from muliple vendors
+		if(!empty($_SESSION['cart']))
+		{
+			if($_SESSION['cart'][0]['vendorId'] != $vendorId)//Check if product on index 0 is the same as the current order coming in
+			{
+				echo '<p class="error">You cannot order from multiple shops</p>';
+				die;//Kill Script
+			}
+		}
 
 		if($exists)//Product already in cart update quantity x1
 		{
@@ -89,6 +120,7 @@ if(isset($_POST) && isset($_POST['action']) && !empty($_POST['action']) )
 			$product['productTitle'] = $productTitle;
 			$product['productPrice'] = $productPrice;
 			$product['productQuantity'] = $productQuantity;
+			$product['orderMessage'] = "";
 
 			$_SESSION['cart'][] = $product;//Associative array within the $_SESSION
 
@@ -118,6 +150,7 @@ if(isset($_POST) && isset($_POST['action']) && !empty($_POST['action']) )
 						if(is_null($_SESSION['cart']))
 						{
 							echo '<p>No items selected.</p>';
+							echo '<script type="text/javascript">location.reload()</script>';//Temporary Page Reload for checkout order options to change
 						}
 
 					}else{//Value is >= 2 so decrement quantity
@@ -133,7 +166,9 @@ if(isset($_POST) && isset($_POST['action']) && !empty($_POST['action']) )
 
 	if($_POST['action'] == 'empty')//Remove cart from Item.
 	{
-		session_unset('cart');
+		unset($_SESSION['cart']);
+		echo '<p>No Items Selected</p>';
+		echo '<script type="text/javascript">location.reload()</script>';//Temporary Page Reload for checkout order options to change
 
 	}
 
@@ -142,6 +177,7 @@ if(isset($_POST) && isset($_POST['action']) && !empty($_POST['action']) )
 	{
 		displayCart($_SESSION['cart']);
 	}
+	
 
 }else{
 		echo '<p class="error">Order Error Invalid Product</p>';

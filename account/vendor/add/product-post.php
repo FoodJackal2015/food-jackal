@@ -3,10 +3,11 @@
  * @category  Push data to database
  * @package   add/product
  * @file      product-post.php
- * @data      26/10/15
+ * @data      29/10/15
  * @author    Graham Murray <graham@graham-murray.com>
  * @copyright Copyright (c) 2015
 */
+
 //Includes
 include('../../../classes/security/validation.php');
 include('../../../classes/database/database-connect.php');
@@ -32,16 +33,10 @@ if($_POST){
 
 	$errors = array();//Array to hold error messages
 	
-
-
-
 ?>	
 	
 	<?php 
-	/* Server Side Validation performed here */
-	
-	
-		
+	/* Server Side Validation performed here */	
 		//Check if title is null
 		if(empty($title)){
 			array_push($errors, "Title can't be empty");
@@ -73,8 +68,6 @@ if($_POST){
 	$connection->closeConnection();
 	?>
 	
-	
-	
 	<?php
 	}else{//Print All the errors instead of the account summary
 		
@@ -86,15 +79,7 @@ if($_POST){
 		echo '<script type="text/javascript">resetForm()</script>';
 		echo '</div>';
 	     }
-
-
 	?>
-
-
-
-	
-	
-
 <?php	
 }else{
 	echo '<p class="error align-center">Internal Server Error, please try again later.</p>';

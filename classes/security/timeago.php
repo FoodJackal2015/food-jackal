@@ -1,10 +1,12 @@
 <?php
 /*
- * @category  Convert Times in time ago
+ * @category  Convert DateTime in time ago
  * @package   classes/security
  * @author    Conor Thompson
  * @copyright Copyright (c) 2015
+ * @reference http://stackoverflow.com/questions/1416697/converting-timestamp-to-time-ago-in-php-e-g-1-day-ago-2-days-ago
 */
+
 class convertToAgo {
     function convert_datetime($str) {
 	
@@ -26,6 +28,5 @@ class convertToAgo {
    			$text = "$difference $periods[$j] ago";
    			return $text;
     }
-	
 } 
 ?>

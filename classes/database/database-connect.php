@@ -1,10 +1,10 @@
 <?php
 /*
- * @category  MySQLi Data Access Layer
+ * @category  Data Access Layer
  * @package   classes/databases
  * @file      database-connection.php
- * @data      26/10/15
- * @author    Graham Murray <graham@graham-murray.com>
+ * @data      01/10/15
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
  * @copyright Copyright (c) 2015
 */
 class Database{
@@ -12,7 +12,7 @@ class Database{
 
 	//Database details
 	var $host = "localhost";
-	var $username = "FoodJackal";
+	var $username = "food_jackal";
 	var $password = "Project2015";
 	var $database = "Food_Jackal";
 	var $conn;
@@ -37,6 +37,7 @@ class Database{
 	public function selectData($sql){
 
 		if(empty($sql)){
+			return false;
 			die('SELECT Query Failed '.$this->conn->error);
 		}
 		$this->result = $this->conn->query($sql);
@@ -50,21 +51,26 @@ class Database{
 		
 		if($this->conn->query($sql) === FALSE){
 			die('Insert Query Failed '.$this->conn->error);
-		}
-
-	}
-
-	/* Update Database */
-	public function updateDatabase($sql){
-		if($this->conn->query($sql) === FALSE){
-			die('Update Query Failed '.$this->conn->error);
-			return false;
 		}else{
 			return true;
 			}
 
 	}
 
+	/* Update Database */
+	public function updateDatabase($sql){
+		if($this->conn->query($sql) === FALSE){
+			echo $this->conn->error;
+		}else{
+			return true;
+			}
+
+	}
+
+	public function getLastId(){
+		$last_id = $this->conn->insert_id;
+		return $last_id;
+	}
 	/* Delete Data */
 
 	public function deleteData($sql){
@@ -78,9 +84,6 @@ class Database{
 	{
 		$this->conn->close();
 	}
-	
-
-
 
 }//Close Class
 

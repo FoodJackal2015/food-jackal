@@ -1,15 +1,101 @@
 <?php
-    session_start();
-    include('./classes/database/database-connect.php');
-    $conn = new Database;
+/*
+ * @category  Homepage
+ * @data      21/10/15
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
+ * @copyright Copyright (c) 2015
+ * @reference JScrollpane http://jscrollpane.kelvinluck.com/
+*/
 
-    /* Connect to database and retrieve all vendors*/
+session_start();
+include('./classes/database/database-connect.php');
+$conn = new Database;
+/* Connect to database and retrieve all vendors*/
+$conn->connectToDatabase();
+$sql = "SELECT v. *, p.productId
+		FROM Vendor v
+		LEFT JOIN Product p ON p.vendorId = v.vendorId
+		WHERE p.productId IS NOT NULL
+		GROUP BY p.vendorId";
+$dataset = $conn->selectData($sql);
+
+/* Function to load categories */
+function loadCategories($conn)
+{
     $conn->connectToDatabase();
-    $sql = "SELECT * FROM Vendor";
+    $sql = "SELECT c.*, COUNT(v.categoryId) AS catCount
+			FROM Category c
+			LEFT JOIN Vendor v ON c.categoryId=v.categoryId
+			GROUP BY c.categoryId
+			ORDER BY c.categoryName ASC";
+    
+    $temp = array();//Temp Array to prep data before pushing into $categories
+    $categories = array();
+
+    if($dataset = $conn->selectData($sql))
+    {
+        
+        while($row = $dataset->fetch_assoc())
+        {
+            
+            $temp['categoryId'] = $row['categoryId'];
+            $temp['categoryName'] = $row['categoryName'];
+            $temp['categoryCount'] = $row['catCount'];
+            
+            array_push($categories, $temp);
+        }
+    }
+    return $categories;
+}
+
+//Load vendors by category
+function loadVendorByCategory($conn,$catId)
+{
+	$conn->connectToDatabase();
+    $sql = "SELECT v. *, p.productId
+			FROM Vendor v
+			LEFT JOIN Product p ON p.vendorId = v.vendorId
+			WHERE p.productId IS NOT NULL AND v.categoryId = ".$catId."
+			GROUP BY p.vendorId";
     $dataset = $conn->selectData($sql);
+    
+    outputVendor($dataset);
+}
+//Output each vendor
+function outputVendor($dataset)
+{
+	if($dataset->num_rows > 0)
+	{
+        while($row = $dataset->fetch_assoc())
+        {
+            //Code to stem description
+            $longDescription = base64_decode($row['vendorDescription']);
+            $shortDescription = strlen($longDescription) > 100 ? substr($longDescription,0,100)."..." : $longDescription;
+            
+            //Code to get vendor logo if there's no logo it'll display a default image
+            if($row['vendorLogoImageName'] == null)
+            {
+                $image = './images/misc/noimage.png';//Default Image
+            }else{
+                $image = './images/Vendor/'.$row['vendorFolderName'].'/logo.png ';
+                }
+            echo '<a class="vendor-link" href="./cart/view-products.php?vid='.$row['vendorId'].'">';
+            echo    '<div class="col-xs-6  col-sm-6 col-md-3 col-lg-3">';
+            echo        '<div class="thumbnail vendor-thumbnail">';
+            echo            '<img class="img-responsive" style="height:150px;" src="'.$image.'" alt="'.$row['vendorName'].' Logo">';
+            echo            '<div class="caption-full">';
+            echo                '<h4 class="text-center"><a  href="./cart/view-products.php?vid='.$row['vendorId'].'">'.$row['vendorName'].'</a></h4>';
+            echo                '<p class="text-center description">'.$shortDescription.'</p>';
+            echo            '</div>';
+            echo        '</div>';
+            echo    '</div>';
+            echo '</a>';
+        }
+	}else{
 
-
-
+		echo '<br><br><h3 class="text-center">No stores have been found. Please choose a different option</h3>';
+		}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +114,10 @@
     <!-- Hotlinks for scripts-->
     <?php include('./includes/links.php'); ?>
 
+    <link rel="stylesheet" type="text/css" href="./css/vendors.css" />
+    
 
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+	
 </head>
 
 <body>
@@ -44,8 +125,6 @@
     <!-- Navigation -->
 	<?php include ('./includes/header.php');?>
  
-    
-    
     <!-- Page Content -->
     <div class="container top-margin-content">
 
@@ -53,65 +132,42 @@
 
         <!-- Category Section -->
             <div class="col-md-3">
-                <h3>Categories</h3>
-                <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
-                    <a href="#" class="list-group-item">Category 4</a>
-                    <a href="#" class="list-group-item">Category 5</a>
-                    <a href="#" class="list-group-item">Category 6</a>
-                    <a href="#" class="list-group-item">Category 7</a>
-                    <a href="#" class="list-group-item">Category 8</a>
-                    <a href="#" class="list-group-item">Category 9</a>
-                    <a href="#" class="list-group-item">Category 9</a>
-                </div>
+                <?php 
+                    $categoryList = loadCategories($conn); 
+                    
+                    //Output categories and badges
+                    if(count($categoryList) > 0)
+                    {
+                        echo '<h3>Categories</h3>';
+                        echo '<div class="list-group scroll-pane">';
+                        foreach ($categoryList as $key => $value) {
+                            echo '<a class="list-group-item" href="'.$_SERVER['PHP_SELF'].'?cid='.$value['categoryId'].'&cname='.$value['categoryName'].'">';
+                            	echo '<span class="p">'.$value['categoryName'].'</span>';
+                           		echo '<span class="badge">'.$value['categoryCount'].'</span>';
+                            echo '</a>';
+                         	   
+                        }
+                        echo '</div>';
+                    }
+                ?>
             </div>
             <div class="col-md-9 text-center">
                 <h1>Stores</h1>
             </div>
             
             <?php
-            if($dataset->num_rows > 0)
+            if( (isset($_REQUEST['cid']) && isset($_REQUEST['cname'])) && ( !empty($_REQUEST['cid']) && !empty($_REQUEST['cname'])) )
             {
-                while($row = $dataset->fetch_assoc())
-                {
-                    //Code to stem description
-                    $longDescription = base64_decode($row['vendorDescription']);
-                    $shortDescription = strlen($longDescription) > 100 ? substr($longDescription,0,100)."..." : $longDescription;
-                    
-                    //Code to get vendor logo if there's no logo it'll display a default image
-                    if($row['vendorLogoImageName'] == null)
-                    {
-                        $image = './images/misc/noimage.png';//Default Image
-                    }else{
-                        $image = './images/Vendor/'.$row['vendorFolderName'].'/logo.png ';
-                        }
-
-                    echo '<a class="vendor-link" href="./cart/view-products.php?vid='.$row['vendorId'].'">';
-                    echo    '<div class="col-xs-4  col-sm-3 col-md-3 col-lg-3">';
-                    echo        '<div class="thumbnail vendor-thumbnail">';
-                    echo            '<img class="img-responsive" style="height:150px;" src="'.$image.'" alt="'.$row['vendorName'].' Logo">';
-                    echo            '<div class="caption-full">';
-                    echo                '<h4 class="text-center"><a  href="./cart/view-products.php?vid='.$row['vendorId'].'">'.$row['vendorName'].'</a></h4>';
-                    echo                '<p class="text-center">'.$shortDescription.'</p>';
-                    echo            '</div>';
-                    echo        '</div>';
-                    echo    '</div>';
-                    echo '</a>';
-                }
-            }
+            	loadVendorByCategory($conn,$_REQUEST['cid']);
+            	
+            }else{
+            	outputVendor($dataset);
+            	}
             ?>
-
         </div>
-
     </div>
-    <!-- /.container -->
-
     <div class="container">
-
         <hr>
-
         <!-- Footer -->
         <footer>
             <div class="row">
@@ -122,14 +178,5 @@
         </footer>
 
     </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
 </body>
-
 </html>

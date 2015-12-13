@@ -1,15 +1,17 @@
+/*
+ * @category  Global CSS used on all pages 
+ * @date      29/09/15
+ * @author    All Team Members
+ * @copyright Copyright (c) 2015
+*/
+
+
 .top-margin-content{
 	margin-top:70px;
 	}
 .center-text{
 	text-align: center;
 	}
-
-/* centered columns styles */
-.col-centered{
-    float: none;
-    margin: 0 auto;
-}
 
 .error{/* AJAX Return */
       color:red;
@@ -36,15 +38,34 @@
 .list-group a:hover{/* This is for categories on vendor page */
 	background-color:#2780E3;
 	}
-.vendor-thumbnail{/* index.php vendor page vendor div height */
-	min-height:290px;
-	min-height:350px;
-	}
-.btn-add-cart{/* list-products.php style for button adding items to cart */
-	border-radius:5px;
-	-moz-border-radius:5px;
-  	-webkit-border-radius:5px;
-	}
-.btn-add-cart:hover{/* list-products.php style for button adding items to cart */
-	background-color:#2780e3;
-	}
+/* index.php vendor page vendor div height */
+.vendor-thumbnail{min-height:250px; max-height:300px;}
+
+/* list-products.php style for button adding items to cart */
+.btn-add-cart{border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;}
+/* list-products.php style for button adding items to cart */
+.btn-add-cart:hover{background-color:#2780e3;}
+
+/* Styles for cart order summary box */
+.order-result{min-height:150px;}
+.cart-total-price{margin-top:60px;}
+.cart-quantity{width: 60px;}
+.cart-empty-checkout form{display: inline;}
+
+/* Scrollbar Styling */
+.scroll-pane
+{
+	width: 100%;
+	height: 200px;
+	overflow: auto;
+}
+.horizontal-only
+{
+	height: auto;
+	max-height: 200px;
+}
+
+/* Center Bootstrap Column */
+.col-centered{float: none; margin: 0 auto;}
+
+

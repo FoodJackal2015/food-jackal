@@ -2,16 +2,11 @@
 /*
  * @category  User Input Validation (Server Side)
  * @package   classes/security
- * @author    Graham Murray <graham@graham-murray.com>
+ * @author    Graham Murray <x13504987@student.ncirl.ie>, Conor Thompson
  * @copyright Copyright (c) 2015
 */
-
-
 	
 class Validation{
-	
-
-
 	
 	/* Check if input is a valid email address */
 	public function emailValidation($email)
@@ -56,9 +51,4 @@ class Validation{
 	
 
 }//Close Class
-
-
-
-
-
 ?>

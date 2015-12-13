@@ -1,12 +1,12 @@
 <?php
 /*
  * @category  Push data to database
- * @package   signup
  * @file      customer-post.php
- * @data      26/10/15
- * @author    Graham Murray <graham@graham-murray.com>
+ * @date      04/10/15
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
  * @copyright Copyright (c) 2015
 */
+
 //Includes
 include('../../classes/security/validation.php');
 include('../../classes/database/database-connect.php');
@@ -21,6 +21,7 @@ if($_POST){
 	$city = $_POST['city'];
 	$phone = $_POST['phone'];
 	$description = base64_encode($_POST['description']);
+	$category = $_POST['category'];
 	$email = $_POST['email'];
 	$pass1 = $_POST['pw1'];
 	$pass2 = $_POST['pw2'];
@@ -36,9 +37,6 @@ if($_POST){
 	<?php 
 	/* Server Side Validation performed here */
 		
-	
-		
-
 		/* Check if email already exists in database*/
 		$emailExist= false;		
 		
@@ -68,6 +66,10 @@ if($_POST){
 		}
 		/* End Check Email Exists */		
 		
+		/*Check category*/
+		if(!empty($category) && is_null($connection)){
+			array_push($errors, "Category Error.");
+		}
 		/* */
 		if(empty($description)){
 			array_push($errors, "Description can't be empty.");
@@ -141,6 +143,7 @@ if($_POST){
 		</tr>
 	</table>
 	<center>
+		<h3> You won't appear on the website until products are added to you listing </h3>
 		<h3> To add products to <?php echo $cName;?>'s product listing go to the settings tab once logged in. </h3>
 	</center>
 
@@ -164,7 +167,7 @@ if($_POST){
 		mkdir("../../images/Vendor/".$vendorFolderName,0777);//Vendor root folder
 		mkdir("../../images/Vendor/".$vendorFolderName."/products",0777);//folder to store product images
 		//Push data to the database 
-		$insert = "INSERT INTO Vendor(vendorName, vendorAddressLine1, vendorAddressLine2, vendorCity, vendorTelephone, vendorAccountCreation,vendorFolderName,vendorDescription,vendorEmail,vendorPassword )VALUES ('$cName', '$addressLine1', '$addressLine2', '$city','$phone', NOW( ),'$vendorFolderName','$description','$email' , '$passHash')";
+		$insert = "INSERT INTO Vendor(vendorName, vendorAddressLine1, vendorAddressLine2, vendorCity, vendorTelephone, vendorAccountCreation,vendorFolderName,vendorDescription,vendorEmail,vendorPassword, categoryId )VALUES ('$cName', '$addressLine1', '$addressLine2', '$city','$phone', NOW( ),'$vendorFolderName','$description','$email' , '$passHash', '$category')";
 		$connection-> insertData($insert);
 		$connection->closeConnection();
 		}
