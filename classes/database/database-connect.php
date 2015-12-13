@@ -13,8 +13,8 @@ class Database{
 	//Database details
 	var $host = "localhost";
 	var $username = "food_jackal";
-	var $password = "Project2015";
-	var $database = "Food_Jackal";
+	var $password = "";//Enter Password
+	var $database = "";//Enter DB Name
 	var $conn;
 	var $result;
 
