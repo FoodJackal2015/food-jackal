@@ -1,0 +1,13 @@
+/*
+ * @category  CSS for customer profile
+ * @usage	  account/customer/profile/myorders.php
+ * @date      28/11/15
+ * @author    Conor Thompson
+ * @copyright Copyright (c) 2015
+*/
+
+/* Scroll Bar for Table Page Specific */
+.scroll-pane,
+.scroll-pane-arrows{width: 100%; height: 450px; overflow: auto;}
+.horizontal-only{height: auto; max-height: 400px;}
+

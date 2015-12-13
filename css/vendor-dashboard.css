@@ -1,0 +1,15 @@
+/*
+ * @category  Vendor Dashboard
+ * @data      29/11/15
+ * @author    Graham Murray <x13504987@student.ncirl.ie>
+ * @copyright Copyright (c) 2015
+*/
+
+.classWithPad { margin:10px; padding:10px; }
+.glyphicon-big{font-size:3em; color:#333333;}
+.glyphicon-big:hover{color:#2780e3;}
+a{color:#333333;}
+a:hover{text-decoration: none;}
+.thumbnail-container{height:40px; width: 40px;}
+#piechart{height: 350px;}
+
